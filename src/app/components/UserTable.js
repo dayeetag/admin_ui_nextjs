@@ -120,7 +120,7 @@ export default function UserTable() {
             <input type='text' placeholder='Search for a user by name, email or role' onChange={handleSearchCriteriaChange} className={styles.searchInput} />
             <button key='searchButton' className={styles.searchIcon} onClick={searchUser}>Search</button>
             {disableTable ?
-                (<p>No data found</p>) : (
+                (<p className={styles.noDataFound}>No data found!</p>) : (
                     <>
                         <table className={styles.table}>
                             <thead className={styles.tableRowHeader}>
