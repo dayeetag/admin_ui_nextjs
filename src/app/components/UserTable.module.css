@@ -1,0 +1,89 @@
+.title{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 30px 10px;
+    font-size: 40px;
+    color: #1e1e33;
+}
+
+.searchInput {
+    width: calc(92% - 40px);
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.searchIcon{
+    background-color: #1e1e33;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: 8%;
+    cursor: pointer;
+}
+
+.table {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    border-collapse: collapse;
+    border: none;
+}
+
+.tableRowHeader {
+    background-color: transparent;
+    transition: all 0.25s ease;
+    border-radius: 10px;
+}
+
+.tableHeader {
+    background-color: #1e1e33;
+    padding: 12px;
+    font-weight: bolder;
+    text-align: left;
+    font-size: 18px;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.tableCell {
+    padding: 12px;
+    font-size: 14px;
+}
+
+.inactiveInput {
+    border: none;
+    outline: none;
+}
+
+.selectedRow{
+    background-color: #f9f9f9;
+}
+
+.selectedRow .inactiveInput{
+    background-color: #f9f9f9;
+}
+
+.tableFooter{
+    display: flex;
+    flex-direction: row;
+}
+
+.deleteAllBtn{
+    background-color: #ff3741;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: 8%;
+    cursor: pointer;
+}
+
+.icon{
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}

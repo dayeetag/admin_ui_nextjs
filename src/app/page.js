@@ -5,11 +5,11 @@ import UserList from "./components/UserTable";
 export default function Home() {
     return (
         <div>
-            <main>
+            <main className={styles.main}>
                 <UserList />
             </main>
-            <footer>
-                Developed by Dayeeta
+            <footer className={styles.footer}>
+                <div>Developed by Dayeeta</div>
             </footer>
         </div>
     );

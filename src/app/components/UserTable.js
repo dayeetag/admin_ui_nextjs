@@ -1,11 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import useTable from '../hooks/useTable';
-import styles from "../page.module.css";
+import styles from "./UserTable.module.css";
 import TableFooter from './TableFooter';
-
-
-
+import { MdEdit, MdSave, MdDelete } from 'react-icons/md';
 
 export default function UserTable() {
     const [users, setUsers] = useState([])
@@ -29,24 +27,25 @@ export default function UserTable() {
 
     //Filtering user list based on search condition
     useEffect(() => {
-        if (searchCriteria === "")
-            setFilteredUsers(users)
-        else {
-            const filteredData = users.filter((u) => {
-                return (
-                    u.name.toLowerCase().includes(searchCriteria) ||
-                    u.email.toLowerCase().includes(searchCriteria) ||
-                    u.role.toLowerCase().includes(searchCriteria)
-                )
-            })
-            setFilteredUsers(filteredData)
-        }
-    }, [users, searchCriteria])
+        setFilteredUsers(users)
+    }, [users])
 
     //Clearing checkbox selections on page change
     useEffect(() => {
         setSelectedUsers([])
     }, [page])
+
+    //Function to search users based on search criteria
+    function searchUser() {
+        const filteredData = users.filter((u) => {
+            return (
+                u.name.toLowerCase().includes(searchCriteria) ||
+                u.email.toLowerCase().includes(searchCriteria) ||
+                u.role.toLowerCase().includes(searchCriteria)
+            )
+        })
+        setFilteredUsers(filteredData)
+    }
 
     //Function to set search condition on text input change
     function handleSearchCriteriaChange(e) {
@@ -117,74 +116,88 @@ export default function UserTable() {
 
     return (
         <div>
-            <main>
-                <h2>Admin UI</h2>
-                <input type='text' placeholder='Search for a user by name, email or role' onChange={handleSearchCriteriaChange} />
-                {disableTable ?
-                    (<p>No data found</p>) : (
-                        <>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <td>
-                                            <input
+            <h2 className={styles.title}>Admin UI</h2>
+            <input type='text' placeholder='Search for a user by name, email or role' onChange={handleSearchCriteriaChange} className={styles.searchInput} />
+            <button key='searchButton' className={styles.searchIcon} onClick={searchUser}>Search</button>
+            {disableTable ?
+                (<p>No data found</p>) : (
+                    <>
+                        <table className={styles.table}>
+                            <thead className={styles.tableRowHeader}>
+                                <tr>
+                                    <th className={styles.tableHeader}>
+                                        <input
+                                            type='checkbox'
+                                            checked={selectedUsers.length === slice.length && selectedUsers.length !== 0} // If all users are selected, check the "Select All" checkbox
+                                            onChange={handleSelectAllChange}
+                                        />
+                                    </th>
+                                    <th className={styles.tableHeader}> Name </th>
+                                    <th className={styles.tableHeader}> Email </th>
+                                    <th className={styles.tableHeader}> Role </th>
+                                    <th colSpan={2} className={styles.tableHeader}>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {slice.map((user) => {
+                                    return (
+                                        <tr key={user.id} className={`${styles.tableRowItems} ${selectedUsers.includes(user.id) ? styles.selectedRow : styles.unselectedRow}`}>
+                                            <td className={styles.tableCell}><input
                                                 type='checkbox'
-                                                checked={selectedUsers.length === slice.length && selectedUsers.length !== 0} // If all users are selected, check the "Select All" checkbox
-                                                onChange={handleSelectAllChange}
+                                                checked={selectedUsers.includes(user.id)} // Check if the user is selected
+                                                onChange={() => handleCheckboxChange(user.id)} // Handle checkbox toggle
                                             />
-                                        </td>
-                                        <td> Name </td>
-                                        <td> Email </td>
-                                        <td> Role </td>
-                                        <td colSpan={2}>Action</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {slice.map((user) => {
-                                        return (
-                                            <tr key={user.id}>
-                                                <td><input
-                                                    type='checkbox'
-                                                    checked={selectedUsers.includes(user.id)} // Check if the user is selected
-                                                    onChange={() => handleCheckboxChange(user.id)} // Handle checkbox toggle
-                                                />
-                                                </td>
-                                                <td><input
-                                                    type='text'
-                                                    value={user.name}
-                                                    readOnly={editingUserId !== user.id}
-                                                    onChange={(e) => handleInputChange(e, user.id, 'name')}
-                                                />
-                                                </td>
-                                                <td><input
-                                                    type='text'
-                                                    value={user.email}
-                                                    readOnly={editingUserId !== user.id}
-                                                    onChange={(e) => handleInputChange(e, user.id, 'email')}
-                                                />
-                                                </td>
-                                                <td><input
-                                                    type='text'
-                                                    style={{ textTransform: 'capitalize' }}
-                                                    value={user.role}
-                                                    readOnly={editingUserId !== user.id}
-                                                    onChange={(e) => handleInputChange(e, user.id, 'role')}
-                                                />
-                                                </td>
-                                                <td><button key='editButton' onClick={() => handleUserEdit(user.id)}>{editingUserId === user.id ? 'Save' : 'Edit'}</button></td>
-                                                <td><button key='deleteButton' onClick={() => handleUserDelete(user.id)}>Delete</button></td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
-                            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                <button onClick={handleDeleteSelected}>Delete Selected</button>
-                                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
-                            </div>
-                        </>
-                    )}
-            </main>
+                                            </td>
+                                            <td className={styles.tableCell}><input
+                                                className={`${styles.inputField} ${editingUserId === user.id ? styles.activeInput : styles.inactiveInput
+                                                    }`}
+                                                type='text'
+                                                value={user.name}
+                                                readOnly={editingUserId !== user.id}
+                                                onChange={(e) => handleInputChange(e, user.id, 'name')}
+                                            />
+                                            </td>
+                                            <td className={styles.tableCell}><input
+                                                className={`${styles.inputField} ${editingUserId === user.id ? styles.activeInput : styles.inactiveInput
+                                                    }`}
+                                                type='text'
+                                                value={user.email}
+                                                readOnly={editingUserId !== user.id}
+                                                onChange={(e) => handleInputChange(e, user.id, 'email')}
+                                            />
+                                            </td>
+                                            <td className={styles.tableCell}><input
+                                                className={`${styles.inputField} ${editingUserId === user.id ? styles.activeInput : styles.inactiveInput
+                                                    }`}
+                                                type='text'
+                                                style={{ textTransform: 'capitalize' }}
+                                                value={user.role}
+                                                readOnly={editingUserId !== user.id}
+                                                onChange={(e) => handleInputChange(e, user.id, 'role')}
+                                            />
+                                            </td>
+                                            <td className={styles.tableCell}>
+                                                <button key='editButton' onClick={() => handleUserEdit(user.id)}  className={styles.icon}>
+                                                    {editingUserId === user.id ? 
+                                                        <MdSave size={20} color={'green'} /> : 
+                                                        <MdEdit size={20} color={'green'} /> }
+                                                </button></td>
+                                            <td className={styles.tableCell}>
+                                                <button key='deleteButton' onClick={() => handleUserDelete(user.id)} className={styles.icon}>
+                                                    <MdDelete size={20} color={'red'} /> 
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                        <div className={styles.tableFooter}>
+                            <button onClick={handleDeleteSelected} className={styles.deleteAllBtn}>Delete Selected</button>
+                            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+                        </div>
+                    </>
+                )}
         </div>
     )
 }

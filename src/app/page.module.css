@@ -1,0 +1,16 @@
+.main {
+    height: 85vh;
+    width: 100vw;
+}
+
+.footer {
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #1e1e33;
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
