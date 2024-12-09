@@ -177,13 +177,13 @@ export default function UserTable() {
                                             />
                                             </td>
                                             <td className={styles.tableCell}>
-                                                <button key='editButton' onClick={() => handleUserEdit(user.id)}  className={styles.icon}>
+                                                <button key='editButton' onClick={() => handleUserEdit(user.id)}  className={styles.edit}>
                                                     {editingUserId === user.id ? 
                                                         <MdSave size={20} color={'green'} /> : 
                                                         <MdEdit size={20} color={'green'} /> }
                                                 </button></td>
                                             <td className={styles.tableCell}>
-                                                <button key='deleteButton' onClick={() => handleUserDelete(user.id)} className={styles.icon}>
+                                                <button key='deleteButton' onClick={() => handleUserDelete(user.id)} className={styles.delete}>
                                                     <MdDelete size={20} color={'red'} /> 
                                                 </button>
                                             </td>

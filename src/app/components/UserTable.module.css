@@ -82,7 +82,7 @@
     cursor: pointer;
 }
 
-.icon{
+.edit, .delete{
     background-color: white;
     border: none;
     cursor: pointer;
