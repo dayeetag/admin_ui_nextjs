@@ -1,4 +1,4 @@
-**User Admin Dashboard**
+# User Admin Dashboard
 
 * This is a User Admin Dashboard project developed using NextJS
 * It fetches user information from an API and displays on the dashboard
